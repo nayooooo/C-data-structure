@@ -94,6 +94,9 @@ stack_err_t _stack_pop(struct stack* s, void* dst, stack_size_t size)
 	if (s->top < size) return -STACK_PARAM;
 
 	stack_memcpy(dst, &(((stack_uint8_t*)(s->stack))[s->top - size]), size);
+	for (stack_size_t i = 0; i < size; i++) {
+		stack_memcpy(&(((stack_uint8_t*)dst)[i]), &(((stack_uint8_t*)(s->stack))[s->top - i - 1]), size);
+	}
 	s->top -= size;
 
 	return STACK_EOK;

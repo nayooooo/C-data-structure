@@ -1,5 +1,5 @@
 ﻿  main.c
   stack.c
-D:\code\CProject\DataStructure\stack\stack\stack.c(124,35): warning C4090: “函数”: 不同的“const”限定符
+D:\code\CProject\DataStructure\stack\stack\stack.c(127,35): warning C4090: “函数”: 不同的“const”限定符
   正在生成代码...
   stack.vcxproj -> D:\code\CProject\DataStructure\stack\x64\Debug\stack.exe
