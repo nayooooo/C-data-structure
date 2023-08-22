@@ -35,6 +35,8 @@ typedef uint16_t		obj_uint16_t;
 typedef uint32_t		obj_uint32_t;
 typedef uint64_t		obj_uint64_t;
 
+typedef obj_uint8_t		obj_sflag_t;
+
 /*========================================================
 	base object
 ========================================================*/

@@ -1,6 +1,2 @@
 ﻿  main.c
-  object.c
-  queue.c
-D:\code\CProject\DataStructure\queue\queue\queue.c(88,33): warning C4090: “函数”: 不同的“const”限定符
-  正在生成代码...
   queue.vcxproj -> D:\code\CProject\DataStructure\queue\x64\Debug\queue.exe

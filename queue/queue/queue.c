@@ -1,5 +1,14 @@
 #include "queue.h"
 
+char* queue_state_code_to_string(queue_sflag_t code)
+{
+	if (code == QUEUE_NONE) return "QUEUE_NONE";
+	else if (code == QUEUE_NORMAL) return "QUEUE_NORMAL";
+	else if (code == QUEUE_FULL) return "QUEUE_FULL";
+	else if (code == QUEUE_EMPTY) return "QUEUE_EMPTY";
+	else return "QUEUE_ERROR_CODE";
+}
+
 queue_err_t _queue_build(struct queue* q, queue_size_t size)
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
@@ -16,6 +25,7 @@ queue_err_t _queue_build(struct queue* q, queue_size_t size)
 
 	q->queue = obj_malloc(size);
 	q->queue_size = size;
+	q->buff_state = QUEUE_EMPTY;
 
 	return QUEUE_EOK;
 }
@@ -28,6 +38,7 @@ queue_err_t _queue_destroy(struct queue* q)
 	obj_free(q->queue);
 	q->queue = QUEUE_NULL;
 	q->queue_size = 0;
+	q->buff_state = QUEUE_NONE;
 
 	return QUEUE_EOK;
 }
@@ -36,12 +47,16 @@ queue_err_t _queue_state(struct queue* q)
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
 
-	return QUEUE_EOK;
+	return q->buff_state;
 }
 
 queue_err_t _queue_clear(struct queue* q)
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
+
+	q->front = 0;
+	q->rear = 0;
+	q->buff_state = QUEUE_EMPTY;
 
 	return QUEUE_EOK;
 }
@@ -50,12 +65,36 @@ queue_err_t _queue_length(struct queue* q)
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
 
-	return QUEUE_EOK;
+	return (q->rear - q->front + q->queue_size) % q->queue_size;
 }
 
 queue_err_t _queue_enter(struct queue* q, void* src, queue_size_t size)
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
+	if (src == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->queue == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->state(q) == QUEUE_FULL) return -QUEUE_ERROR;
+	if ((size == 0) || (size > q->queue_size - q->length(q))) return -QUEUE_PARAM;
+
+	if (q->queue_size - q->rear >= size) {
+		obj_memcpy(&(((queue_uint8_t*)(q->queue))[q->rear]), src, size);
+	}
+	else {
+		queue_size_t wrote_num;
+		wrote_num = q->queue_size - q->rear;
+		obj_memcpy(&(((queue_uint8_t*)(q->queue))[q->rear]), src, wrote_num);
+		obj_memcpy(q->queue, &(((queue_uint8_t*)src)[wrote_num]), size - wrote_num);
+	}
+
+	q->rear = (q->rear + size) % q->queue_size;
+
+	queue_size_t now_length = q->length(q);
+	if (now_length == 0) {
+		q->buff_state = QUEUE_FULL;
+	}
+	else {
+		q->buff_state = QUEUE_NORMAL;
+	}
 
 	return QUEUE_EOK;
 }
@@ -63,6 +102,30 @@ queue_err_t _queue_enter(struct queue* q, void* src, queue_size_t size)
 queue_err_t _queue_out(struct queue* q, void* dst, queue_size_t size)
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
+	if (dst == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->queue == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->state(q) == QUEUE_EMPTY) return -QUEUE_ERROR;
+	if ((size == 0) || (size > q->length(q))) return -QUEUE_PARAM;
+
+	if (q->queue_size - q->front >= size) {
+		obj_memcpy(dst, &(((queue_uint8_t*)(q->queue))[q->front]), size);
+	}
+	else {
+		queue_size_t read_num;
+		read_num = q->queue_size - q->front;
+		obj_memcpy(dst, &(((queue_uint8_t*)(q->queue))[q->front]), read_num);
+		obj_memcpy(&(((queue_uint8_t*)dst)[read_num]), q->queue, size - read_num);
+	}
+
+	q->front = (q->front + size) % q->queue_size;
+
+	queue_size_t now_length = q->length(q);
+	if (now_length == 0) {
+		q->buff_state = QUEUE_EMPTY;
+	}
+	else {
+		q->buff_state = QUEUE_NORMAL;
+	}
 
 	return QUEUE_EOK;
 }
@@ -70,6 +133,12 @@ queue_err_t _queue_out(struct queue* q, void* dst, queue_size_t size)
 queue_err_t _queue_read(struct queue* q, void* dst)
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
+	if (dst == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->queue == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->state(q) == QUEUE_EMPTY) return -QUEUE_ERROR;
+	if (q->length(q) == 0) return -QUEUE_ERROR;
+
+	obj_memcpy(&(((queue_uint8_t*)(q->queue))[q->front]), dst, 1);
 
 	return QUEUE_EOK;
 }
@@ -91,6 +160,8 @@ queue_err_t queue_init(struct queue* q, const char* name)
 	q->queue = QUEUE_NULL;
 	q->front = 0;
 	q->rear = 0;
+
+	q->buff_state = QUEUE_NONE;
 
 	q->build = _queue_build;
 	q->destroy = _queue_destroy;

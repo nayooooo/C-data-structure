@@ -12,9 +12,10 @@
 #define QUEUE_ERROR				OBJ_ERROR
 #define QUEUE_PARAM				OBJ_PARAM
 
-#define QUEUE_NORMAL			(0)
-#define QUEUE_FULL				(1)
-#define QUEUE_EMPTY				(2)
+#define QUEUE_NONE				(0)
+#define QUEUE_NORMAL			(1)
+#define QUEUE_FULL				(2)
+#define QUEUE_EMPTY				(3)
 
 /*========================================================
 	base typedef
@@ -33,6 +34,8 @@ typedef obj_uint16_t		queue_uint16_t;
 typedef obj_uint32_t		queue_uint32_t;
 typedef obj_uint64_t		queue_uint64_t;
 
+typedef obj_sflag_t			queue_sflag_t;
+
 /*========================================================
 	base object
 ========================================================*/
@@ -43,6 +46,8 @@ struct queue {
 	queue_size_t queue_size;
 	queue_base_t front;
 	queue_base_t rear;
+
+	queue_sflag_t buff_state;
 
 	queue_err_t		(*build)				(struct queue* q, queue_size_t size);
 	queue_err_t		(*destroy)				(struct queue* q);
