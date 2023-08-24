@@ -1,0 +1,5 @@
+﻿  binaryTree.c
+D:\code\CProject\DataStructure\binaryTree\binaryTree\binaryTree.c(45,33): warning C4090: “函数”: 不同的“const”限定符
+  main.c
+  正在生成代码...
+  binaryTree.vcxproj -> D:\code\CProject\DataStructure\binaryTree\x64\Debug\binaryTree.exe

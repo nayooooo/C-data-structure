@@ -54,5 +54,6 @@ void* obj_malloc(obj_size_t size);
 void obj_free(void* block);
 
 void* obj_memcpy(void* dst, void* src, obj_size_t size);
+int obj_memcmp(const void* buf1, const void* buf2, obj_size_t size);
 
 #endif // !__OBJECT_H__

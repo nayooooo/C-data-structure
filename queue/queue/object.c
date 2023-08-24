@@ -22,3 +22,8 @@ void* obj_memcpy(void* dst, void* src, obj_size_t size)
 {
 	return memcpy(dst, src, size);
 }
+
+int obj_memcmp(const void* buf1, const void* buf2, obj_size_t size)
+{
+	return memcmp(buf1, buf2, size);
+}
