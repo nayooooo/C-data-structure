@@ -57,7 +57,7 @@ struct queue {
 	queue_err_t		(*enter)				(struct queue* q, void* src, queue_size_t size);
 	queue_err_t		(*out)					(struct queue* q, void* dst, queue_size_t size);
 	queue_err_t		(*read)					(struct queue* q, void* dst);
-	queue_err_t		(*traverse)				(struct queue* q, void(*visit)(void));
+	queue_err_t		(*traverse)				(struct queue* q, void(*visit)(queue_uint8_t data));
 };
 typedef struct queue* queue_t;
 

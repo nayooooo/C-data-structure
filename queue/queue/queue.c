@@ -143,9 +143,18 @@ queue_err_t _queue_read(struct queue* q, void* dst)
 	return QUEUE_EOK;
 }
 
-queue_err_t _queue_traverse(struct queue* q, void(*visit)(void))
+queue_err_t _queue_traverse(struct queue* q, void(*visit)(queue_uint8_t data))
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
+	if (visit == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->queue == QUEUE_NULL) return -QUEUE_PARAM;
+	if (q->state(q) == QUEUE_EMPTY) return -QUEUE_ERROR;
+
+	for (queue_base_t i = 0; i < q->length(q); i++) {
+		queue_base_t ind = (q->front + i) % q->queue_size;
+		queue_uint8_t data = ((queue_uint8_t*)(q->queue))[ind];
+		visit(data);
+	}
 
 	return QUEUE_EOK;
 }
