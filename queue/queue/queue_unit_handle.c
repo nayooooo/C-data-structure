@@ -39,6 +39,43 @@ queue_err_t _qu_memcpy_8bit(
 
 #endif
 
+#if QUEUE_UNIT_USE_16BIT
+
+queue_err_t _qu_malloc_16bit(void** queue_buff, queue_size_t size)
+{
+	*queue_buff = obj_malloc(size * sizeof(queue_uint16_t));
+
+	return QUEUE_EOK;
+}
+
+queue_err_t _qu_free_16bit(void* block)
+{
+	if (block == QUEUE_NULL) return -QUEUE_PARAM;
+	obj_free(block);
+
+	return QUEUE_EOK;
+}
+
+queue_err_t _qu_memcpy_16bit(
+	void* dst_base, void* src_base,
+	queue_size_t dst_offset, queue_size_t src_offset,
+	queue_size_t size
+)
+{
+	void* dst_addr;
+	void* src_addr;
+	queue_size_t true_size;
+
+	dst_addr = &(((queue_uint16_t*)dst_base)[dst_offset]);
+	src_addr = &(((queue_uint16_t*)src_base)[src_offset]);
+	true_size = size * sizeof(queue_uint16_t);
+	obj_memcpy(dst_addr, src_addr, true_size);
+
+	return QUEUE_EOK;
+}
+
+#endif
+
 #if QUEUE_UNIT_USE_32BIT
 
 queue_err_t _qu_malloc_32bit(void** queue_buff, queue_size_t size)
@@ -79,6 +116,9 @@ queue_err_t _qu_memcpy_32bit(
 static const struct queue_unit_handle _queue_unit_handles[] = {
 #if QUEUE_UNIT_USE_8BIT
 	{ QUEUE_UNIT_TYPE_8BIT, _qu_malloc_8bit, _qu_free_8bit, _qu_memcpy_8bit },
+#endif
+#if QUEUE_UNIT_USE_16BIT
+	{ QUEUE_UNIT_TYPE_16BIT, _qu_malloc_16bit, _qu_free_16bit, _qu_memcpy_16bit },
 #endif
 #if QUEUE_UNIT_USE_32BIT
 	{ QUEUE_UNIT_TYPE_32BIT, _qu_malloc_32bit, _qu_free_32bit, _qu_memcpy_32bit },

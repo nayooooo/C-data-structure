@@ -22,6 +22,7 @@
 #define QUEUE_UNIT_TYPE_LEN				(8)
 #define QUEUE_UNIT_TYPE_NULL			""
 #define QUEUE_UNIT_TYPE_8BIT			"char"
+#define QUEUE_UNIT_TYPE_16BIT			"short"
 #define QUEUE_UNIT_TYPE_32BIT			"int"
 
 /*========================================================

@@ -1,11 +1,12 @@
 #include "main.h"
 
-#define MAIN_USE_8BIT		(1)
+#define MAIN_USE_8BIT		(0)
+#define MAIN_USE_16BIT		(1)
 #define MAIN_USE_32BIT		(0)
-#if !(MAIN_USE_8BIT || MAIN_USE_32BIT)
+#if !(MAIN_USE_8BIT || MAIN_USE_16BIT || MAIN_USE_32BIT)
 #error you must choose one kind!
 #endif
-#if MAIN_USE_8BIT + MAIN_USE_32BIT != 1
+#if MAIN_USE_8BIT + MAIN_USE_16BIT + MAIN_USE_32BIT != 1
 #error you must choose only one kind!
 #endif
 
@@ -13,6 +14,9 @@ struct queue q;
 #if MAIN_USE_8BIT
 queue_uint8_t tx_buff[50] = { 0 };
 queue_uint8_t rx_buff[50] = { 0 };
+#elif MAIN_USE_16BIT
+queue_uint16_t tx_buff[50] = { 0 };
+queue_uint16_t rx_buff[50] = { 0 };
 #elif MAIN_USE_32BIT
 queue_uint32_t tx_buff[50] = { 0 };
 queue_uint32_t rx_buff[50] = { 0 };
@@ -22,6 +26,8 @@ void my_queue_visit(void* data)
 {
 #if MAIN_USE_8BIT
 	printf("%d\r\n", (int)(*((queue_uint8_t*)data)));
+#elif MAIN_USE_16BIT
+	printf("%d\r\n", (int)(*((queue_uint16_t*)data)));
 #elif MAIN_USE_32BIT
 	printf("%d\r\n", (int)(*((queue_uint32_t*)data)));
 #endif
@@ -37,6 +43,8 @@ int main()
 	queue_init(&q, "test");
 #if MAIN_USE_8BIT
 	q.build(&q, QUEUE_UNIT_TYPE_8BIT, 100);
+#elif MAIN_USE_16BIT
+	q.build(&q, QUEUE_UNIT_TYPE_16BIT, 100);
 #elif MAIN_USE_32BIT
 	q.build(&q, QUEUE_UNIT_TYPE_32BIT, 100);
 #endif
@@ -47,6 +55,8 @@ int main()
 		int true_size;
 		if (!obj_memcmp(q.type, QUEUE_UNIT_TYPE_8BIT, strlen(QUEUE_UNIT_TYPE_8BIT)))
 			true_size = 1;
+		else if (!obj_memcmp(q.type, QUEUE_UNIT_TYPE_16BIT, strlen(QUEUE_UNIT_TYPE_16BIT)))
+			true_size = 2;
 		else if (!obj_memcmp(q.type, QUEUE_UNIT_TYPE_32BIT, strlen(QUEUE_UNIT_TYPE_32BIT)))
 			true_size = 4;
 		else

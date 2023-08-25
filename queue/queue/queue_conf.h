@@ -8,7 +8,7 @@
 #endif
 
 #define QUEUE_UNIT_USE_8BIT			(1)
-#define QUEUE_UNIT_USE_16BIT		(0)
+#define QUEUE_UNIT_USE_16BIT		(1)
 #define QUEUE_UNIT_USE_32BIT		(1)
 #define QUEUE_UNIT_USE_64BIT		(0)
 
