@@ -83,11 +83,17 @@ bitree_err_t _bitree_remove(struct bitree* b, bitreeData_t data)
 	return BINARYTREE_EOK;
 }
 
+static bitree_size_t _bitree_get_length(bitreeCore_t bc)
+{
+	if (bc == BINARYTREE_NULL) return 0;
+	return _bitree_get_length(bc->lc) + _bitree_get_length(bc->rc) + 1;
+}
+
 bitree_err_t _bitree_length(struct bitree* b)
 {
 	if (b == BINARYTREE_NULL) return -BINARYTREE_PARAM;
 
-	return BINARYTREE_EOK;
+	return _bitree_get_length(b->head);
 }
 
 bitree_err_t _bitree_leafNum(struct bitree* b)
