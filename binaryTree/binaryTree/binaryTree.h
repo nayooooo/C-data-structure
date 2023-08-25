@@ -1,8 +1,8 @@
-#ifndef __QUEUE_H__
-#define __QUEUE_H__
+#ifndef __BINARYTREE_H__
+#define __BINARYTREE_H__
 
 #include "binaryTree_type.h"
 
 bitree_err_t bitree_init(struct bitree* b, const char* name);
 
-#endif // !__QUEUE_H__
+#endif // !__BINARYTREE_H__

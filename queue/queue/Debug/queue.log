@@ -2,7 +2,7 @@
 D:\code\CProject\DataStructure\queue\queue\main.c(56,49): warning C4013: “strlen”未定义；假设外部返回 int
   queue.c
 D:\code\CProject\DataStructure\queue\queue\queue.c(28,26): warning C4090: “函数”: 不同的“const”限定符
-D:\code\CProject\DataStructure\queue\queue\queue.c(183,33): warning C4090: “函数”: 不同的“const”限定符
+D:\code\CProject\DataStructure\queue\queue\queue.c(186,33): warning C4090: “函数”: 不同的“const”限定符
   queue_unit_handle.c
 D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(131,22): warning C4090: “初始化”: 不同的“const”限定符
 D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(139,12): warning C4047: “初始化”:“void **”与“int”的间接级别不同
@@ -10,4 +10,5 @@ D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(146,11): warning 
 D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(151,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
 D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(152,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
   正在生成代码...
+  LINK : 没有找到 D:\code\CProject\DataStructure\queue\Debug\queue.exe 或上一个增量链接没有生成它；正在执行完全链接
   queue.vcxproj -> D:\code\CProject\DataStructure\queue\Debug\queue.exe

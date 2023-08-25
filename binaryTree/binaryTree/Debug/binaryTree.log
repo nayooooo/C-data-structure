@@ -1,0 +1,7 @@
+﻿  queue_unit_handle.c
+D:\code\CProject\DataStructure\binaryTree\binaryTree\queue\queue_unit_handle.c(131,22): warning C4090: “初始化”: 不同的“const”限定符
+D:\code\CProject\DataStructure\binaryTree\binaryTree\queue\queue_unit_handle.c(139,12): warning C4047: “初始化”:“void **”与“int”的间接级别不同
+D:\code\CProject\DataStructure\binaryTree\binaryTree\queue\queue_unit_handle.c(146,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
+D:\code\CProject\DataStructure\binaryTree\binaryTree\queue\queue_unit_handle.c(151,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
+D:\code\CProject\DataStructure\binaryTree\binaryTree\queue\queue_unit_handle.c(152,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
+  binaryTree.vcxproj -> D:\code\CProject\DataStructure\binaryTree\Debug\binaryTree.exe

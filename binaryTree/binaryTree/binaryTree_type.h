@@ -49,12 +49,13 @@ typedef struct bitreeCore* bitreeCore_t;
 struct bitree {
 	struct object parent;
 
-	struct bitreeCore core;
+	bitreeCore_t head;
 
 	bitree_err_t		(*add)				(struct bitree* b, bitreeData_t data);
 	bitree_err_t		(*remove)			(struct bitree* b, bitreeData_t data);
 	bitree_err_t		(*length)			(struct bitree* b);
 	bitree_err_t		(*leafNum)			(struct bitree* b);
+	bitree_err_t		(*depth)			(struct bitree* b);
 	bitree_err_t		(*traverse)			(struct bitree* b, void(*visit)(bitreeData_t data));
 };
 typedef struct bitree* bitree_t;
