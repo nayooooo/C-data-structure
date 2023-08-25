@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="queue">
+      <UniqueIdentifier>{527a10d3-6091-47d0-86f7-151926e0f0ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="queue\src">
+      <UniqueIdentifier>{7dd1e78a-be0f-4c48-a9b8-dd573ca6628e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="queue\inc">
+      <UniqueIdentifier>{02e34641-383b-4737-ace0-0f994501d6d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binaryTree.h">
@@ -24,6 +33,18 @@
     <ClInclude Include="main.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="queue\queue.h">
+      <Filter>queue\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="queue\queue_conf.h">
+      <Filter>queue\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="queue\queue_type.h">
+      <Filter>queue\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="queue\queue_unit_handle.h">
+      <Filter>queue\inc</Filter>
+    </ClInclude>
     <ClInclude Include="object.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -34,6 +55,12 @@
     </ClCompile>
     <ClCompile Include="main.c">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="queue\queue.c">
+      <Filter>queue\src</Filter>
+    </ClCompile>
+    <ClCompile Include="queue\queue_unit_handle.c">
+      <Filter>queue\src</Filter>
     </ClCompile>
     <ClCompile Include="object.c">
       <Filter>源文件</Filter>

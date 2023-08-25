@@ -131,11 +131,17 @@
     <ClInclude Include="binaryTree_type.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="queue\queue.h" />
+    <ClInclude Include="queue\queue_conf.h" />
+    <ClInclude Include="queue\queue_type.h" />
+    <ClInclude Include="queue\queue_unit_handle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="binaryTree.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="object.c" />
+    <ClCompile Include="queue\queue.c" />
+    <ClCompile Include="queue\queue_unit_handle.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
