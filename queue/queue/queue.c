@@ -25,7 +25,6 @@ queue_err_t _queue_build(struct queue* q, const char* type, queue_size_t size)
 			return err;
 		}
 	}
-	//q->queue = obj_malloc(size);
 	obj_memcpy(q->type, type, obj_strlen(type));
 	queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MALLOC,
 						&q->queue, size);
@@ -40,7 +39,6 @@ queue_err_t _queue_destroy(struct queue* q)
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
 	if (q->queue == QUEUE_NULL) return -QUEUE_PARAM;
 
-	//obj_free(q->queue);
 	queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_FREE, q->queue);
 	q->queue = QUEUE_NULL;
 	q->queue_size = 0;
@@ -83,15 +81,12 @@ queue_err_t _queue_enter(struct queue* q, void* src, queue_size_t size)
 	if ((size == 0) || (size > q->queue_size - q->length(q))) return -QUEUE_PARAM;
 
 	if (q->queue_size - q->rear >= size) {
-		//obj_memcpy(&(((queue_uint8_t*)(q->queue))[q->rear]), src, size);
 		queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
 							q->queue, src, q->rear, 0, size);
 	}
 	else {
 		queue_size_t wrote_num;
 		wrote_num = q->queue_size - q->rear;
-		//obj_memcpy(&(((queue_uint8_t*)(q->queue))[q->rear]), src, wrote_num);
-		//obj_memcpy(q->queue, &(((queue_uint8_t*)src)[wrote_num]), size - wrote_num);
 		queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
 							q->queue, src, q->rear, 0, wrote_num);
 		queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
@@ -120,15 +115,12 @@ queue_err_t _queue_out(struct queue* q, void* dst, queue_size_t size)
 	if ((size == 0) || (size > q->length(q))) return -QUEUE_PARAM;
 
 	if (q->queue_size - q->front >= size) {
-		//obj_memcpy(dst, &(((queue_uint8_t*)(q->queue))[q->front]), size);
 		queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
 							dst, q->queue, 0, q->front, size);
 	}
 	else {
 		queue_size_t read_num;
 		read_num = q->queue_size - q->front;
-		//obj_memcpy(dst, &(((queue_uint8_t*)(q->queue))[q->front]), read_num);
-		//obj_memcpy(&(((queue_uint8_t*)dst)[read_num]), q->queue, size - read_num);
 		queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
 							dst, q->queue, 0, q->front, read_num);
 		queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
@@ -156,28 +148,30 @@ queue_err_t _queue_read(struct queue* q, void* dst)
 	if (q->state(q) == QUEUE_EMPTY) return -QUEUE_ERROR;
 	if (q->length(q) == 0) return -QUEUE_ERROR;
 
-	//obj_memcpy(&(((queue_uint8_t*)(q->queue))[q->front]), dst, 1);
 	queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
 						q->queue, dst, q->front, 0, 1);
 
 	return QUEUE_EOK;
 }
 
-queue_err_t _queue_traverse(struct queue* q, void(*visit)(queue_uint8_t data))
+queue_err_t _queue_traverse(struct queue* q, void(*visit)(void* data))
 {
 	if (q == QUEUE_NULL) return -QUEUE_PARAM;
 	if (visit == QUEUE_NULL) return -QUEUE_PARAM;
 	if (q->queue == QUEUE_NULL) return -QUEUE_PARAM;
 	if (q->state(q) == QUEUE_EMPTY) return -QUEUE_ERROR;
 
+	void* data;
+	queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MALLOC,
+						&data, 1);
 	for (queue_base_t i = 0; i < q->length(q); i++) {
 		queue_base_t ind = (q->front + i) % q->queue_size;
-		queue_uint8_t data;
-		//data = ((queue_uint8_t*)(q->queue))[ind];
 		queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_MEMCPY,
-							&data, q->queue, 0, ind, 1);
+							data, q->queue, 0, ind, 1);
 		visit(data);
 	}
+	queue_unit_handler(q->type, QUEUE_UNIT_HANDLE_FREE,
+						data);
 
 	return QUEUE_EOK;
 }

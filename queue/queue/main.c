@@ -1,12 +1,30 @@
 #include "main.h"
 
+#define MAIN_USE_8BIT		(1)
+#define MAIN_USE_32BIT		(0)
+#if !(MAIN_USE_8BIT || MAIN_USE_32BIT)
+#error you must choose one kind!
+#endif
+#if MAIN_USE_8BIT + MAIN_USE_32BIT != 1
+#error you must choose only one kind!
+#endif
+
 struct queue q;
+#if MAIN_USE_8BIT
 queue_uint8_t tx_buff[50] = { 0 };
 queue_uint8_t rx_buff[50] = { 0 };
+#elif MAIN_USE_32BIT
+queue_uint32_t tx_buff[50] = { 0 };
+queue_uint32_t rx_buff[50] = { 0 };
+#endif
 
-void my_queue_visit(queue_uint8_t data)
+void my_queue_visit(void* data)
 {
-	printf("%d\r\n", (int)data);
+#if MAIN_USE_8BIT
+	printf("%d\r\n", (int)(*((queue_uint8_t*)data)));
+#elif MAIN_USE_32BIT
+	printf("%d\r\n", (int)(*((queue_uint32_t*)data)));
+#endif
 }
 
 int main()
@@ -17,10 +35,24 @@ int main()
 
 	printf("\r\n********** init ***********\r\n");
 	queue_init(&q, "test");
+#if MAIN_USE_8BIT
 	q.build(&q, QUEUE_UNIT_TYPE_8BIT, 100);
+#elif MAIN_USE_32BIT
+	q.build(&q, QUEUE_UNIT_TYPE_32BIT, 100);
+#endif
 	printf("q_name:    %s\r\n", q.parent.name);
 	printf("queue_p:   %p\r\n", q.queue);
 	printf("queue_len: %d\r\n", (int)q.queue_size);
+	{
+		int true_size;
+		if (!obj_memcmp(q.type, QUEUE_UNIT_TYPE_8BIT, strlen(QUEUE_UNIT_TYPE_8BIT)))
+			true_size = 1;
+		else if (!obj_memcmp(q.type, QUEUE_UNIT_TYPE_32BIT, strlen(QUEUE_UNIT_TYPE_32BIT)))
+			true_size = 4;
+		else
+			true_size = 0;
+		printf("malloc true size: %d", (int)(q.queue_size * true_size));
+	}
 
 	for (int i = 0; i < 2; i++) {
 		printf("\r\n********* handle **********\r\n");
