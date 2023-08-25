@@ -1,4 +1,7 @@
-﻿  queue.c
-D:\code\CProject\DataStructure\queue\queue\queue.c(166,33): warning C4090: “函数”: 不同的“const”限定符
-D:\code\CProject\DataStructure\queue\queue\queue.c(175,11): warning C4113: “queue_err_t (__cdecl *)(queue *,queue_size_t,const char *)”和“queue_err_t (__cdecl *)(queue *,queue_size_t)”的参数列表不同
-  queue.vcxproj -> D:\code\CProject\DataStructure\queue\x64\Debug\queue.exe
+﻿  main.c
+D:\code\CProject\DataStructure\queue\queue\queue_conf.h(5,1): fatal  error C1189: #error:  the queue need use win32!
+  queue.c
+D:\code\CProject\DataStructure\queue\queue\queue_conf.h(5,1): fatal  error C1189: #error:  the queue need use win32!
+  queue_unit_handle.c
+D:\code\CProject\DataStructure\queue\queue\queue_conf.h(5,1): fatal  error C1189: #error:  the queue need use win32!
+  正在生成代码...

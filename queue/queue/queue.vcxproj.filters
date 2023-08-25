@@ -24,6 +24,9 @@
     <ClCompile Include="object.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="queue_unit_handle.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -36,6 +39,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="queue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="queue_unit_handle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="queue_conf.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

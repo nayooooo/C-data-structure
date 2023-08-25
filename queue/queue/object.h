@@ -56,4 +56,6 @@ void obj_free(void* block);
 void* obj_memcpy(void* dst, void* src, obj_size_t size);
 int obj_memcmp(const void* buf1, const void* buf2, obj_size_t size);
 
+obj_size_t obj_strlen(const char* str);
+
 #endif // !__OBJECT_H__

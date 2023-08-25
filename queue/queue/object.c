@@ -27,3 +27,8 @@ int obj_memcmp(const void* buf1, const void* buf2, obj_size_t size)
 {
 	return memcmp(buf1, buf2, size);
 }
+
+obj_size_t obj_strlen(const char* str)
+{
+	return (obj_size_t)strlen(str);
+}

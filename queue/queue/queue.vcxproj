@@ -130,12 +130,15 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="object.c" />
     <ClCompile Include="queue.c" />
+    <ClCompile Include="queue_unit_handle.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="queue.h" />
+    <ClInclude Include="queue_conf.h" />
     <ClInclude Include="queue_type.h" />
+    <ClInclude Include="queue_unit_handle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
