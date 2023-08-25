@@ -19,6 +19,11 @@
 #define QUEUE_FULL				(2)
 #define QUEUE_EMPTY				(3)
 
+#define QUEUE_UNIT_TYPE_LEN				(8)
+#define QUEUE_UNIT_TYPE_NULL			""
+#define QUEUE_UNIT_TYPE_8BIT			"char"
+#define QUEUE_UNIT_TYPE_32BIT			"int"
+
 /*========================================================
 	base typedef
 ========================================================*/
@@ -45,13 +50,14 @@ struct queue {
 	struct object parent;
 
 	void* queue;
+	char type[QUEUE_UNIT_TYPE_LEN];
 	queue_size_t queue_size;
 	queue_base_t front;
 	queue_base_t rear;
 
 	queue_sflag_t buff_state;
 
-	queue_err_t		(*build)				(struct queue* q, queue_size_t size);
+	queue_err_t		(*build)				(struct queue* q, const char* type, queue_size_t size);
 	queue_err_t		(*destroy)				(struct queue* q);
 	queue_err_t		(*state)				(struct queue* q);
 	queue_err_t		(*clear)				(struct queue* q);

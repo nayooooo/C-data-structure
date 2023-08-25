@@ -3,9 +3,6 @@
 
 #include "queue.h"
 
-#define QUEUE_UNIT_TYPE_8BIT			"char"
-#define QUEUE_UNIT_TYPE_32BIT			"int"
-
 #define QUEUE_UNIT_HANDLE_MALLOC		1
 #define QUEUE_UNIT_HANDLE_FREE			2
 #define QUEUE_UNIT_HANDLE_MEMCPY		3

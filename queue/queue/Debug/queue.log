@@ -1,4 +1,12 @@
-﻿  queue.c
-D:\code\CProject\DataStructure\queue\queue\queue.c(187,33): warning C4090: “函数”: 不同的“const”限定符
-D:\code\CProject\DataStructure\queue\queue\queue.c(196,11): warning C4113: “queue_err_t (__cdecl *)(queue *,queue_size_t,const char *)”和“queue_err_t (__cdecl *)(queue *,queue_size_t)”的参数列表不同
+﻿  main.c
+  queue.c
+D:\code\CProject\DataStructure\queue\queue\queue.c(29,26): warning C4090: “函数”: 不同的“const”限定符
+D:\code\CProject\DataStructure\queue\queue\queue.c(189,33): warning C4090: “函数”: 不同的“const”限定符
+  queue_unit_handle.c
+D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(77,22): warning C4090: “初始化”: 不同的“const”限定符
+D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(85,12): warning C4047: “初始化”:“void **”与“int”的间接级别不同
+D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(92,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
+D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(97,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
+D:\code\CProject\DataStructure\queue\queue\queue_unit_handle.c(98,11): warning C4047: “初始化”:“void *”与“int”的间接级别不同
+  正在生成代码...
   queue.vcxproj -> D:\code\CProject\DataStructure\queue\Debug\queue.exe

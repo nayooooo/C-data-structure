@@ -17,7 +17,7 @@ int main()
 
 	printf("\r\n********** init ***********\r\n");
 	queue_init(&q, "test");
-	q.build(&q, 100);
+	q.build(&q, QUEUE_UNIT_TYPE_8BIT, 100);
 	printf("q_name:    %s\r\n", q.parent.name);
 	printf("queue_p:   %p\r\n", q.queue);
 	printf("queue_len: %d\r\n", (int)q.queue_size);
