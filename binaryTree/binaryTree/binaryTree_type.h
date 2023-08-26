@@ -56,7 +56,7 @@ struct bitree {
 	bitree_err_t		(*length)			(struct bitree* b);
 	bitree_err_t		(*leafNum)			(struct bitree* b);
 	bitree_err_t		(*depth)			(struct bitree* b);
-	bitree_err_t		(*traverse)			(struct bitree* b, void(*visit)(bitreeData_t data));
+	bitree_err_t		(*traverse)			(struct bitree* b, void(*visit)(void* data));
 };
 typedef struct bitree* bitree_t;
 

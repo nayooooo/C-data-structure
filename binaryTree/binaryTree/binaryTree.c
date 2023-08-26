@@ -96,11 +96,18 @@ bitree_err_t _bitree_length(struct bitree* b)
 	return _bitree_get_length(b->head);
 }
 
+static bitree_size_t _bitree_get_leafNum(bitreeCore_t bc)
+{
+	if (bc == BINARYTREE_NULL) return 0;
+	if ((bc->lc == BINARYTREE_NULL) && (bc->rc == BINARYTREE_NULL)) return 1;
+	return _bitree_get_leafNum(bc->lc) + _bitree_get_leafNum(bc->rc);
+}
+
 bitree_err_t _bitree_leafNum(struct bitree* b)
 {
 	if (b == BINARYTREE_NULL) return -BINARYTREE_PARAM;
 
-	return BINARYTREE_EOK;
+	return _bitree_get_leafNum(b->head);
 }
 
 static bitree_size_t _bitree_get_depth(bitreeCore_t bc)
@@ -117,7 +124,7 @@ bitree_err_t _bitree_depth(struct bitree* b)
 	return (bitree_err_t)_bitree_get_depth(b->head);
 }
 
-bitree_err_t _bitree_traverse(struct bitree* b, void(*visit)(bitreeData_t data))
+bitree_err_t _bitree_traverse(struct bitree* b, void(*visit)(void* data))
 {
 	if (b == BINARYTREE_NULL) return -BINARYTREE_PARAM;
 	if (visit == BINARYTREE_NULL) return -BINARYTREE_PARAM;
