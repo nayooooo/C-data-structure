@@ -50,7 +50,7 @@ bitree_err_t _bitree_add(struct bitree* b, bitreeData_t data)
 		obj_memcpy(&((*bch)->data), data, sizeof((*bch)->data));
 		(*bch)->lc = BINARYTREE_NULL;
 		(*bch)->rc = BINARYTREE_NULL;
-		goto bitree_add_ok;
+		goto bitree_add_no_queue_ok;
 	}
 	else {  // 已挂载树
 		// build queue
@@ -92,7 +92,7 @@ bitree_err_t _bitree_add(struct bitree* b, bitreeData_t data)
 		}
 	}
 
-bitree_add_ok:
+bitree_add_no_queue_ok:
 	return BINARYTREE_EOK;
 }
 
@@ -273,10 +273,40 @@ bitree_err_t _bitree_depth(struct bitree* b)
 	return (bitree_err_t)_bitree_get_depth(b->head);
 }
 
+// 层序遍历，回调传参为bitreeCore_t
+static bitree_err_t _bitree_level_traversal_bitreeCore_t(
+	bitreeCore_t bc, queue_size_t q_size,
+	void(*visit)(void* data)
+)
+{
+	if (bc == BINARYTREE_NULL) return -BINARYTREE_PARAM;
+	if (q_size <= 0) return -BINARYTREE_PARAM;
+	if (visit == BINARYTREE_NULL) return -BINARYTREE_PARAM;
+
+	// build queue
+	struct queue q;
+	queue_init(&q, "bitree_add");
+	q_size = (queue_size_t)pow(2, q_size - 1);
+	q.build(&q, QUEUE_UNIT_TYPE_32BIT, q_size);
+	if (q.queue == QUEUE_NULL) return -BINARYTREE_ERROR;
+
+	q.enter(&q, &bc, 1);
+	while (q.state(&q) != QUEUE_EMPTY) {
+		q.out(&q, &bc, 1);
+		visit(bc);
+		if (bc->lc != BINARYTREE_NULL) q.enter(&q, &(bc->lc), 1);
+		if (bc->rc != BINARYTREE_NULL) q.enter(&q, &(bc->rc), 1);
+	}
+
+	q.destroy(&q);
+}
+
 bitree_err_t _bitree_traverse(struct bitree* b, void(*visit)(void* data))
 {
 	if (b == BINARYTREE_NULL) return -BINARYTREE_PARAM;
 	if (visit == BINARYTREE_NULL) return -BINARYTREE_PARAM;
+
+	_bitree_level_traversal_bitreeCore_t(b->head, b->depth(b), visit);
 
 	return BINARYTREE_EOK;
 }
